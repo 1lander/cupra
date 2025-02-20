@@ -9,6 +9,7 @@ import { ThemedView } from "@/components/ThemedView";
 import DashboardItem from "@/components/ui/DashboardItem";
 import data from "@/assets/dummyData/home.json";
 import BatteryCard from "@/components/ui/BatteryCard";
+import DoorsCard from "@/components/ui/DoorsCard";
 
 export default function HomeScreen() {
   return (
@@ -27,13 +28,7 @@ export default function HomeScreen() {
           isCharging={data.vehicle.isCharging}
           timeRemaining={data.battery.charging.timeRemaining}
         />
-{/* 
-        <DashboardItem
-          backgroundColor="#8a1e4f"
-          icon={<MaterialCommunityIcons name="thermometer" size={24} color="white" />}
-          title="Climate"
-          value={`${data.climate.interiorTemp}°F Inside`}
-        /> */}
+        <DoorsCard doorStatus={data.vehicle.doorStatus} />
       </ThemedView>
     </ParallaxScrollView>
   );

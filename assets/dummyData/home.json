@@ -3,6 +3,14 @@
     "name": "Cupra Born VZ",
     "nickname": "My Cupra",
     "status": "parked",
+    "doorStatus": {
+      "frontLeft": true,
+      "frontRight": true,
+      "rearLeft": true,
+      "rearRight": false,
+      "trunk": false,
+      "hood": true
+    },
     "isCharging": true
   },
   "battery": {
