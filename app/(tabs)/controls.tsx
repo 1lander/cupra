@@ -1,19 +1,14 @@
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image } from "react-native";
 
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
 
 export default function TabTwoScreen() {
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/cupra_born.png')}
-          style={styles.headerImage}
-        />
-      }
+      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
+      headerImage={<Image source={require("@/assets/images/cupra_born.png")} style={styles.headerImage} />}
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Controls</ThemedText>
@@ -25,14 +20,14 @@ export default function TabTwoScreen() {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+    flexDirection: "row",
+    gap: 8
   },
   headerImage: {
     height: 250,
     width: "100%",
     bottom: 0,
     left: 0,
-    position: 'absolute',
-  },
+    position: "absolute"
+  }
 });

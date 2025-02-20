@@ -1,1 +1,22 @@
-{}
+{
+    "semi": true,
+    "trailingComma": "none",
+    "singleQuote": false,
+    "arrowParens": "always",
+    "printWidth": 120,
+    "endOfLine": "lf",
+    "tabWidth": 2,
+    "useTabs": false,
+    "bracketSpacing": true,
+    "overrides": [
+      {
+        "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+        "options": { "parser": "typescript" }
+      },
+      {
+        "files": "*.json",
+        "options": { "parser": "json" }
+      }
+    ]
+  }
+  
