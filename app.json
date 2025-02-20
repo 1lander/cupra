@@ -36,6 +36,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "cd5c657b-ea70-4782-b3aa-dc7904b9414a"
+      }
+    },
+    "owner": "lander"
   }
 }

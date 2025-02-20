@@ -1,0 +1,2 @@
+"weconnect-cupra-daern[Images]"==0.50.13
+python-dotenv==0.19.0 
