@@ -6,7 +6,7 @@
     "isCharging": true
   },
   "battery": {
-    "level": 72,
+    "level": 34,
     "range": 310,
     "charging": {
       "timeRemaining": "2:15",

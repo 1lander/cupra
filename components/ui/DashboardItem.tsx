@@ -1,51 +1,58 @@
-import { StyleSheet, View, TextProps, Text } from "react-native";
-import { useThemeColor } from "@/hooks/useThemeColor";
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
-export type ThemedTextProps = TextProps & {
-  backgroundColor?: string;
-  lightColor?: string;
-  darkColor?: string;
-  icon: React.ReactNode;
+interface DashboardItemProps {
   title: string;
-  value: string;
-};
-
-export default function DashboardItem({
-  lightColor = "white",
-  darkColor = "white",
-  backgroundColor,
-  icon,
-  title,
-  value
-}: ThemedTextProps) {
-  const color = useThemeColor({ light: lightColor, dark: darkColor }, "text");
+  children: React.ReactNode,
+  icon: React.ReactNode
+}
+export default function DashboardItem({ title, children, icon }: DashboardItemProps) {
+  const textColor = useThemeColor({}, 'text');
 
   return (
-    <View style={[styles.step, { backgroundColor }]}>
-      <View style={styles.iconContainer}>
+    <View style={[
+      styles.container, 
+      { 
+        borderColor: textColor,
+      }
+    ]}>
+      <View style={styles.header}>
         {icon}
-        <Text style={[styles.text, { color }]}>{title}</Text>
+        <Text style={[styles.title, { color: textColor }]}>{title}</Text>
       </View>
-      <Text style={[styles.text, { color }]}>{value}</Text>
+
+      <View style={styles.content}>
+        {children}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  step: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 8,
+  container: {
     padding: 16,
-    borderRadius: 16
+    borderRadius: 12,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    borderWidth: 3,
+    backgroundColor: "#2A312B",
   },
-  iconContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
   },
-  text: {
-    fontSize: 18
-  }
+  title: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginLeft: 8,
+  },
+  content: {
+    gap: 12,
+  },
 });
