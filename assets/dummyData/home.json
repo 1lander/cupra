@@ -1,0 +1,33 @@
+{
+  "vehicle": {
+    "name": "Cupra Born VZ",
+    "nickname": "My Cupra",
+    "status": "parked",
+    "isCharging": true
+  },
+  "battery": {
+    "level": 72,
+    "range": {
+      "estimated": 267,
+      "ideal": 310
+    },
+    "charging": {
+      "timeRemaining": "2:15",
+      "rateKwH": 48,
+      "addedRange": 25
+    }
+  },
+  "climate": {
+    "interiorTemp": 72,
+    "exteriorTemp": 68,
+    "isClimatePowered": true,
+    "fanSpeed": 4
+  },
+  "location": {
+    "address": "123 Electric Ave, San Francisco, CA",
+    "coordinates": {
+      "latitude": 37.7749,
+      "longitude": -122.4194
+    }
+  }
+}
