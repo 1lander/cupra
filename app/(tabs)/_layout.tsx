@@ -30,14 +30,14 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Home",
-          tabBarIcon: ({ color }) => <Entypo name="home" size={24} color="white" />
+          tabBarIcon: ({ color }) => <Entypo name="home" size={24} color={color} />
         }}
       />
       <Tabs.Screen
         name="controls"
         options={{
           title: "Controls",
-          tabBarIcon: ({ color }) => <Entypo name="game-controller" size={24} color="white" />
+          tabBarIcon: ({ color }) => <Entypo name="game-controller" size={24} color={color} />
         }}
       />
     </Tabs>
