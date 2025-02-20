@@ -8,6 +8,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import DashboardItem from "@/components/ui/DashboardItem";
 import data from "@/assets/dummyData/home.json";
+import BatteryCard from "@/components/ui/BatteryCard";
 
 export default function HomeScreen() {
   return (
@@ -20,26 +21,19 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <DashboardItem
-          backgroundColor="#2e6921"
-          icon={<FontAwesome name="battery-full" size={24} color="white" />}
-          title="Battery Level"
-          value={`${data.battery.level}%`}
+        <BatteryCard
+          batteryLevel={data.battery.level}
+          range={data.battery.range}
+          isCharging={data.vehicle.isCharging}
+          timeRemaining={data.battery.charging.timeRemaining}
         />
-
-        <DashboardItem
-          backgroundColor="#1e4f8a"
-          icon={<MaterialCommunityIcons name="ev-station" size={24} color="white" />}
-          title="Charging Status"
-          value={data.vehicle.isCharging ? `${data.battery.charging.rateKwH} kW` : "Not Connected"}
-        />
-
+{/* 
         <DashboardItem
           backgroundColor="#8a1e4f"
           icon={<MaterialCommunityIcons name="thermometer" size={24} color="white" />}
           title="Climate"
           value={`${data.climate.interiorTemp}°F Inside`}
-        />
+        /> */}
       </ThemedView>
     </ParallaxScrollView>
   );

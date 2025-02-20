@@ -7,10 +7,7 @@
   },
   "battery": {
     "level": 72,
-    "range": {
-      "estimated": 267,
-      "ideal": 310
-    },
+    "range": 310,
     "charging": {
       "timeRemaining": "2:15",
       "rateKwH": 48,
