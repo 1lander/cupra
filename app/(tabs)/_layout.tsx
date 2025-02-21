@@ -40,6 +40,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <Entypo name="game-controller" size={24} color={color} />
         }}
       />
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Map",
+          tabBarIcon: ({ color }) => <Entypo name="map" size={24} color={color} />
+        }}
+      />
     </Tabs>
   );
 }
