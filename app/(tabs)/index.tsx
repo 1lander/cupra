@@ -8,8 +8,10 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import DashboardItem from "@/components/ui/DashboardItem";
 import data from "@/assets/dummyData/home.json";
-import BatteryCard from "@/components/ui/BatteryCard";
-import DoorsCard from "@/components/ui/DoorsCard";
+import BatteryCard from "@/components/cards/BatteryCard";
+import DoorsCard from "@/components/cards/DoorsCard";
+import WindowsCard from "@/components/cards/WindowsCard";
+import VehicleStatsCard from "@/components/cards/VehicleCard";
 
 export default function HomeScreen() {
   return (
@@ -22,13 +24,20 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
+        <VehicleStatsCard
+          model={data.vehicle.name}
+          year={data.vehicle.year}
+          odometer={data.vehicle.odometer}
+          vin={data.vehicle.vin}
+        />
         <BatteryCard
           batteryLevel={data.battery.level}
           range={data.battery.range}
-          isCharging={data.vehicle.isCharging}
+          isCharging={data.battery.isCharging}
           timeRemaining={data.battery.charging.timeRemaining}
         />
         <DoorsCard doorStatus={data.vehicle.doorStatus} />
+        <WindowsCard windowStatus={data.vehicle.windowStatus} />
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -49,7 +58,7 @@ const styles = StyleSheet.create({
     gap: 8
   },
   stepContainer: {
-    gap: 12,
+    gap: 20,
     marginBottom: 16
   },
   headerImage: {

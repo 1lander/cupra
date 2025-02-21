@@ -3,6 +3,9 @@
     "name": "Cupra Born VZ",
     "nickname": "My Cupra",
     "status": "parked",
+    "odometer": 12345,
+    "vin": "12345678901234567",
+    "year": 2024,
     "doorStatus": {
       "frontLeft": true,
       "frontRight": true,
@@ -11,11 +14,17 @@
       "trunk": false,
       "hood": true
     },
-    "isCharging": true
+    "windowStatus": {
+      "frontLeft": true,
+      "frontRight": true,
+      "rearLeft": true,
+      "rearRight": false
+    }
   },
   "battery": {
     "level": 34,
     "range": 310,
+    "isCharging": true,
     "charging": {
       "timeRemaining": "2:15",
       "rateKwH": 48,

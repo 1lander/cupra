@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import DashboardItem from './DashboardItem';
+import DashboardItem from '../ui/DashboardItem';
 import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface DoorStatus {

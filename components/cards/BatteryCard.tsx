@@ -10,7 +10,7 @@ import Animated, {
   useSharedValue,
   withDelay
 } from "react-native-reanimated";
-import DashboardItem from "./DashboardItem";
+import DashboardItem from "../ui/DashboardItem";
 
 interface BatteryCardProps {
   batteryLevel: number; // percentage (0-100)
