@@ -28,7 +28,7 @@ export default function DashboardItem({ title, children, icon, isLoading, isErro
           opacity: pressed ? 0.8 : 1
         }
       ]}
-      disabled={isLoading || isError}
+      disabled={isLoading || isError || !onPress}
     >
       <View style={styles.header}>
         {icon}

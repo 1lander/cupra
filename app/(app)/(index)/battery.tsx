@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Animated, {
   useAnimatedStyle,
   withRepeat,
@@ -11,6 +11,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import data from "@/assets/dummyData/home.json";
+import Button from "@/components/Button";
 import { useThemeColor } from "@/hooks/useThemeColor";
 export default function ChargingScreen() {
   const textColor = useThemeColor({}, "text");
@@ -62,17 +63,18 @@ export default function ChargingScreen() {
         </View>
 
         <View style={styles.chargingControlContainer}>
-          <TouchableOpacity
-            style={[styles.chargingButton, { backgroundColor: battery.isCharging ? "#ff4444" : "#44aa44" }]}
+          <Button
             onPress={handleToggleCharging}
-          >
-            <MaterialCommunityIcons
-              name={battery.isCharging ? "power-plug-off" : "power-plug"}
-              size={24}
-              color="white"
-            />
-            <Text style={styles.chargingButtonText}>{battery.isCharging ? "Stop Charging" : "Start Charging"}</Text>
-          </TouchableOpacity>
+            title={battery.isCharging ? "Stop Charging" : "Start Charging"}
+            color={battery.isCharging ? "#ff4444" : "#44aa44"}
+            icon={
+              <MaterialCommunityIcons
+                name={battery.isCharging ? "power-plug-off" : "power-plug"}
+                size={24}
+                color="white"
+              />
+            }
+          />
         </View>
 
         {battery.isCharging && (
@@ -187,18 +189,5 @@ const styles = StyleSheet.create({
   chargingControlContainer: {
     alignItems: "center",
     marginVertical: 16
-  },
-  chargingButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 25,
-    gap: 8
-  },
-  chargingButtonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600"
   }
 });

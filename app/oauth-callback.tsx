@@ -3,6 +3,7 @@ import { useRouter } from "expo-router";
 import { useEffect } from "react";
 import { ActivityIndicator, View } from "react-native";
 
+import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { TokenData } from "@/services/session";
 
@@ -12,22 +13,22 @@ export default function OAuthCallback() {
   const router = useRouter();
 
   useEffect(() => {
-    // Check for token data every 100ms
     const interval = setInterval(() => {
       const tokenData = queryClient.getQueryData<TokenData>(["token_data"]);
       if (tokenData?.access_token) {
         router.replace("/(app)/(index)");
         clearInterval(interval);
       }
-    }, 100);
+    }, 1000);
 
     // Cleanup interval
     return () => clearInterval(interval);
-  }, []);
+  }, [queryClient, router]);
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: background }}>
       <ActivityIndicator size="large" />
+      <ThemedText>Logging in...</ThemedText>
     </View>
   );
 }

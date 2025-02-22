@@ -1,18 +1,19 @@
 import React from "react";
-import { StyleSheet, Pressable, ActivityIndicator, Text } from "react-native";
+import { StyleSheet, Pressable, ActivityIndicator, Text, View } from "react-native";
 
 interface ButtonProps {
   title: string;
   onPress?: () => void;
   isLoading?: boolean;
-  variant?: "primary" | "secondary";
+  color?: string;
+  icon?: React.ReactNode;
   disabled?: boolean;
 }
 
-export default function Button({ title, onPress, isLoading, variant = "primary", disabled = false }: ButtonProps) {
+export default function Button({ title, onPress, isLoading, color = "#2A312B", disabled = false, icon }: ButtonProps) {
   const getBackgroundColor = () => {
     if (disabled) return "#4A4A4A";
-    return variant === "primary" ? "#2A312B" : "transparent";
+    return color;
   };
 
   return (
@@ -27,7 +28,14 @@ export default function Button({ title, onPress, isLoading, variant = "primary",
       ]}
       disabled={disabled || isLoading}
     >
-      {isLoading ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.text}>{title}</Text>}
+      {isLoading ? (
+        <ActivityIndicator color="#FFFFFF" />
+      ) : (
+        <View style={styles.buttonContent}>
+          {icon}
+          <Text style={styles.text}>{title}</Text>
+        </View>
+      )}
     </Pressable>
   );
 }
@@ -49,5 +57,10 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "600"
+  },
+  buttonContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8
   }
 });
