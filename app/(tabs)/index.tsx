@@ -11,6 +11,7 @@ import BatteryCard from "@/components/cards/BatteryCard";
 import DoorsCard from "@/components/cards/DoorsCard";
 import WindowsCard from "@/components/cards/WindowsCard";
 import VehicleCard from "@/components/cards/VehicleCard";
+import Error from "@/components/ui/Error";
 
 export default function HomeScreen() {
   return (

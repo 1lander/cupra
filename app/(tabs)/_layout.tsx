@@ -41,10 +41,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="map"
+        name="user"
         options={{
-          title: "Map",
-          tabBarIcon: ({ color }) => <Entypo name="map" size={24} color={color} />
+          title: "User",
+          tabBarIcon: ({ color }) => <Entypo name="user" size={24} color={color} />
         }}
       />
     </Tabs>
