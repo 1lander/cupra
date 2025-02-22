@@ -11,15 +11,20 @@ import DoorsCard from "@/components/cards/DoorsCard";
 import WindowsCard from "@/components/cards/WindowsCard";
 import VehicleCard from "@/components/cards/VehicleCard";
 import Error from "@/components/ui/Error";
+import { useRouter } from "expo-router";
+import UserCard from "@/components/cards/UserCard";
+import { useUserInfo } from "@/services/userService";
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={<Image source={require("@/assets/images/cupra_born.png")} style={styles.headerImage} />}
     >
       <View style={styles.titleContainer}>
-        <ThemedText type="title">Welcome to {data.vehicle.nickname}!</ThemedText>
+        <ThemedText type="title">Welcome {data.vehicle.nickname}!</ThemedText>
         <HelloWave />
       </View>
       <View style={styles.stepContainer}>
@@ -35,7 +40,16 @@ export default function HomeScreen() {
           range={data.battery.range}
           isCharging={data.battery.isCharging}
           timeRemaining={data.battery.charging.timeRemaining}
+          onNavigate={() => {
+            router.push("/charging");
+          }}
         />
+          <UserCard
+            onNavigate={() => {
+              router.push("/user");
+            }}
+          />
+        
         {/* <DoorsCard doorStatus={data.vehicle.doorStatus} />
         <WindowsCard windowStatus={data.vehicle.windowStatus} /> */}
       </View>

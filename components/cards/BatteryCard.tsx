@@ -11,17 +11,20 @@ import Animated, {
   withDelay
 } from "react-native-reanimated";
 import DashboardItem from "../ui/DashboardItem";
+import { useRouter } from "expo-router";
 
 interface BatteryCardProps {
   batteryLevel: number; // percentage (0-100)
   range: number; // miles/kilometers
   isCharging: boolean;
   timeRemaining?: string; // only present if charging
+  onNavigate?: () => void;
 }
 
-export default function BatteryCard({ batteryLevel, range, isCharging, timeRemaining }: BatteryCardProps) {
+export default function BatteryCard({ batteryLevel, range, isCharging, timeRemaining, onNavigate }: BatteryCardProps) {
   const textColor = useThemeColor({}, "text");
   const opacity = useSharedValue(1);
+  const router = useRouter();
 
   const batteryColor = useMemo(() => {
     if (batteryLevel > 30) {
@@ -53,6 +56,7 @@ export default function BatteryCard({ batteryLevel, range, isCharging, timeRemai
     <DashboardItem
       title="Battery Status"
       icon={<MaterialCommunityIcons name={isCharging ? "battery-charging" : "battery"} size={24} color={textColor} />}
+      onPress={onNavigate}
     >
       <>
         <View style={styles.percentageContainer}>
