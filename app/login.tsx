@@ -1,6 +1,6 @@
-import { router } from "expo-router";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet } from "react-native";
 
+import Button from "@/components/Button";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
 import { useLogin } from "@/services/session";
@@ -8,21 +8,13 @@ import { useLogin } from "@/services/session";
 export default function Login() {
   const { mutate: login } = useLogin();
   const background = useThemeColor({}, "background");
-  const primary = useThemeColor({}, "primary");
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.content}>
-        <Pressable
-          style={[styles.loginButton, { backgroundColor: primary }]}
-          onPress={() => {
-            login();
-            router.replace("/");
-          }}
-        >
-          <ThemedText>Sign In</ThemedText>
-        </Pressable>
+        <Button title="Login" onPress={() => login()} />
       </View>
+      <ThemedText style={styles.text}>This will redirect you to the cupra login page.</ThemedText>
     </View>
   );
 }
@@ -37,9 +29,8 @@ const styles = StyleSheet.create({
     width: "80%",
     maxWidth: 400
   },
-  loginButton: {
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center"
+  text: {
+    textAlign: "center",
+    marginTop: 16
   }
 });
