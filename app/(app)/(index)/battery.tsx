@@ -18,7 +18,7 @@ export default function ChargingScreen() {
   const textColor = useThemeColor({}, "text");
   const opacity = useSharedValue(1);
   const { battery } = data;
-  const [chargingLimit, setChargingLimit] = useState(100);
+  const [chargingLimit, setChargingLimit] = useState(80);
 
   const batteryColor = battery.level > 30 ? "green" : battery.level > 10 ? "yellow" : "red";
 
@@ -44,9 +44,8 @@ export default function ChargingScreen() {
   };
 
   const handleChargingLimitChange = (value: number) => {
-    setChargingLimit(Math.round(value));
+    setChargingLimit(value);
     // TODO: Implement actual charging limit control
-    console.log("Charging limit set to:", Math.round(value));
   };
 
   return (
@@ -109,10 +108,10 @@ export default function ChargingScreen() {
           <View style={styles.sliderContainer}>
             <Slider
               style={styles.slider}
+              value={80}
               minimumValue={50}
               maximumValue={100}
-              step={1}
-              value={chargingLimit}
+              step={5}
               onValueChange={handleChargingLimitChange}
               minimumTrackTintColor={batteryColor}
               maximumTrackTintColor={`${batteryColor}30`}
