@@ -3,14 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 interface UserInfo {
   sub: string;
   name: string;
-  given_name?: string;
-  family_name?: string;
-  nickname?: string;
+  given_name: string;
+  family_name: string;
+  nickname: string;
   email: string;
   email_verified: boolean;
-  birthdate?: string;
+  birthdate: string;
   updated_at: number;
-  picture?: string;
+  picture: string;
 }
 
 const USERINFO_ENDPOINT = 'https://identity-userinfo.vwgroup.io/oidc/userinfo';

@@ -1,11 +1,10 @@
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import data from "@/assets/dummyData/home.json";
 import BatteryCard from "@/components/cards/BatteryCard";
 import DoorsCard from "@/components/cards/DoorsCard";
@@ -19,11 +18,11 @@ export default function HomeScreen() {
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
       headerImage={<Image source={require("@/assets/images/cupra_born.png")} style={styles.headerImage} />}
     >
-      <ThemedView style={styles.titleContainer}>
+      <View style={styles.titleContainer}>
         <ThemedText type="title">Welcome to {data.vehicle.nickname}!</ThemedText>
         <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
+      </View>
+      <View style={styles.stepContainer}>
         <VehicleCard
           model={data.vehicle.name}
           year={data.vehicle.year}
@@ -39,7 +38,7 @@ export default function HomeScreen() {
         />
         {/* <DoorsCard doorStatus={data.vehicle.doorStatus} />
         <WindowsCard windowStatus={data.vehicle.windowStatus} /> */}
-      </ThemedView>
+      </View>
     </ParallaxScrollView>
   );
 }

@@ -1,8 +1,7 @@
-import { StyleSheet, Image } from "react-native";
+import { StyleSheet, Image, View } from "react-native";
 
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 
 export default function ControlsScreen() {
   return (
@@ -10,9 +9,9 @@ export default function ControlsScreen() {
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={<Image source={require("@/assets/images/cupra_born.png")} style={styles.headerImage} />}
     >
-      <ThemedView style={styles.titleContainer}>
+      <View style={styles.titleContainer}>
         <ThemedText type="title">Controls</ThemedText>
-      </ThemedView>
+      </View>
       <ThemedText>This app includes example code to help you get started.</ThemedText>
     </ParallaxScrollView>
   );
