@@ -6,6 +6,7 @@
     "odometer": 12345,
     "vin": "12345678901234567",
     "year": 2024,
+    "nextService": "2025-09-22",
     "doorStatus": {
       "frontLeft": true,
       "frontRight": true,

@@ -30,6 +30,7 @@ export default function HomeScreen() {
           odometer={data.vehicle.odometer}
           vin={data.vehicle.vin}
           location={data.location}
+          nextService={data.vehicle.nextService}
         />
         <BatteryCard
           onNavigate={() => {

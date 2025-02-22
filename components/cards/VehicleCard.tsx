@@ -11,6 +11,7 @@ interface VehicleCardProps {
   year: number;
   odometer: number;
   vin: string;
+  nextService: string;
   location?: {
     latitude: number;
     longitude: number;
@@ -18,7 +19,7 @@ interface VehicleCardProps {
   };
 }
 
-export default function VehicleCard({ model, year, odometer, vin, location }: VehicleCardProps) {
+export default function VehicleCard({ model, year, odometer, vin, nextService, location }: VehicleCardProps) {
   const textColor = useThemeColor({}, "text");
   const linkColor = useThemeColor({}, "tint");
 
@@ -57,6 +58,11 @@ export default function VehicleCard({ model, year, odometer, vin, location }: Ve
       <View style={styles.infoRow}>
         <Text style={[styles.label, { color: textColor }]}>VIN:</Text>
         <Text style={[styles.value, { color: textColor }]}>{vin}</Text>
+      </View>
+
+      <View style={styles.infoRow}>
+        <Text style={[styles.label, { color: textColor }]}>Next Service:</Text>
+        <Text style={[styles.value, { color: textColor }]}>{nextService}</Text>
       </View>
 
       {location && (

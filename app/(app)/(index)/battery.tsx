@@ -1,5 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useEffect } from "react";
+import Slider from "@react-native-community/slider";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -17,6 +18,7 @@ export default function ChargingScreen() {
   const textColor = useThemeColor({}, "text");
   const opacity = useSharedValue(1);
   const { battery } = data;
+  const [chargingLimit, setChargingLimit] = useState(100);
 
   const batteryColor = battery.level > 30 ? "green" : battery.level > 10 ? "yellow" : "red";
 
@@ -39,6 +41,12 @@ export default function ChargingScreen() {
   const handleToggleCharging = () => {
     // TODO: Implement actual charging control
     console.log("Toggle charging");
+  };
+
+  const handleChargingLimitChange = (value: number) => {
+    setChargingLimit(Math.round(value));
+    // TODO: Implement actual charging limit control
+    console.log("Charging limit set to:", Math.round(value));
   };
 
   return (
@@ -92,6 +100,27 @@ export default function ChargingScreen() {
             </View>
           </View>
         )}
+
+        <View style={styles.chargingLimitContainer}>
+          <View style={styles.chargingLimitHeader}>
+            <MaterialCommunityIcons name="battery-charging-100" size={24} color={textColor} />
+            <Text style={[styles.chargingLimitTitle, { color: textColor }]}>Charging Limit</Text>
+          </View>
+          <View style={styles.sliderContainer}>
+            <Slider
+              style={styles.slider}
+              minimumValue={50}
+              maximumValue={100}
+              step={1}
+              value={chargingLimit}
+              onValueChange={handleChargingLimitChange}
+              minimumTrackTintColor={batteryColor}
+              maximumTrackTintColor={`${batteryColor}30`}
+              thumbTintColor={batteryColor}
+            />
+            <Text style={[styles.chargingLimitValue, { color: textColor }]}>{chargingLimit}%</Text>
+          </View>
+        </View>
 
         <View style={styles.statsContainer}>
           <View style={styles.statItem}>
@@ -189,5 +218,32 @@ const styles = StyleSheet.create({
   chargingControlContainer: {
     alignItems: "center",
     marginVertical: 16
+  },
+  chargingLimitContainer: {
+    backgroundColor: "#2A312B",
+    padding: 16,
+    borderRadius: 12
+  },
+  chargingLimitHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 16
+  },
+  chargingLimitTitle: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginLeft: 8
+  },
+  sliderContainer: {
+    alignItems: "center"
+  },
+  slider: {
+    width: "100%",
+    height: 40
+  },
+  chargingLimitValue: {
+    fontSize: 18,
+    fontWeight: "600",
+    marginTop: 8
   }
 });
