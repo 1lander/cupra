@@ -6,12 +6,11 @@ import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import DashboardItem from "@/components/ui/DashboardItem";
 import data from "@/assets/dummyData/home.json";
 import BatteryCard from "@/components/cards/BatteryCard";
 import DoorsCard from "@/components/cards/DoorsCard";
 import WindowsCard from "@/components/cards/WindowsCard";
-import VehicleStatsCard from "@/components/cards/VehicleCard";
+import VehicleCard from "@/components/cards/VehicleCard";
 
 export default function HomeScreen() {
   return (
@@ -24,11 +23,12 @@ export default function HomeScreen() {
         <HelloWave />
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
-        <VehicleStatsCard
+        <VehicleCard
           model={data.vehicle.name}
           year={data.vehicle.year}
           odometer={data.vehicle.odometer}
           vin={data.vehicle.vin}
+          location={data.location}
         />
         <BatteryCard
           batteryLevel={data.battery.level}
@@ -36,8 +36,8 @@ export default function HomeScreen() {
           isCharging={data.battery.isCharging}
           timeRemaining={data.battery.charging.timeRemaining}
         />
-        <DoorsCard doorStatus={data.vehicle.doorStatus} />
-        <WindowsCard windowStatus={data.vehicle.windowStatus} />
+        {/* <DoorsCard doorStatus={data.vehicle.doorStatus} />
+        <WindowsCard windowStatus={data.vehicle.windowStatus} /> */}
       </ThemedView>
     </ParallaxScrollView>
   );

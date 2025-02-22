@@ -38,10 +38,8 @@
     "fanSpeed": 4
   },
   "location": {
-    "address": "123 Electric Ave, San Francisco, CA",
-    "coordinates": {
-      "latitude": 37.7749,
-      "longitude": -122.4194
-    }
+    "address": "Rooseveltplaats",
+    "latitude": 51.2206,
+    "longitude": 4.4214
   }
 }
