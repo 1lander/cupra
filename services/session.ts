@@ -17,7 +17,7 @@ function getLoginUrl(): string {
   return `${AUTHORIZATION_URL}?${params.toString()}`;
 }
 
-interface TokenData {
+export interface TokenData {
   access_token: string;
   refresh_token?: string;
   expires_in: number;

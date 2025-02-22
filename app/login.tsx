@@ -1,13 +1,19 @@
+import { Redirect } from "expo-router";
 import { View, StyleSheet } from "react-native";
 
 import Button from "@/components/Button";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { useLogin } from "@/services/session";
+import { useLogin, useAuthToken } from "@/services/session";
 
 export default function Login() {
   const { mutate: login } = useLogin();
+  const token = useAuthToken();
   const background = useThemeColor({}, "background");
+
+  if (token) {
+    return <Redirect href="/(app)/(index)" />;
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
