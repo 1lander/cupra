@@ -5,13 +5,13 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { useEffect } from "react";
 
-import { useAuthStatus } from "@/services/session";
 import "react-native-reanimated";
+import { useAuthToken } from "@/services/session";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
-  const { isAuthenticated } = useAuthStatus();
+  const { token } = useAuthToken();
 
   const [loaded] = useFonts({
     SpaceMono: require("./../../assets/fonts/SpaceMono-Regular.ttf")
@@ -27,8 +27,7 @@ export default function AppLayout() {
     return null;
   }
 
-  //TODO: Remove this once we have a proper auth flow
-  if (!isAuthenticated) {
+  if (!token) {
     return <Redirect href="/login" />;
   }
 
