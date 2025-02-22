@@ -11,7 +11,7 @@ import { useAuthToken } from "@/services/session";
 SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
-  const { token } = useAuthToken();
+  const token = useAuthToken();
 
   const [loaded] = useFonts({
     SpaceMono: require("./../../assets/fonts/SpaceMono-Regular.ttf")

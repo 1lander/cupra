@@ -1,8 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as WebBrowser from "expo-web-browser";
 
-import { User } from "../types/user";
-
 const CALLBACK_URL = "cupra://oauth-callback";
 const AUTHORIZATION_URL = "https://identity.vwgroup.io/oidc/v1/authorize";
 const ACCESS_TOKEN_URL = "https://identity.vwgroup.io/oidc/v1/token";
@@ -59,8 +57,7 @@ async function login(): Promise<TokenData> {
         throw new Error("Failed to get access token");
       }
 
-      const tokenData: TokenData = await tokenResponse.json();
-      return tokenData;
+      return await tokenResponse.json();
     }
     throw new Error("Login failed");
   } catch (error) {
@@ -85,12 +82,12 @@ export function useLogin() {
   return useMutation({
     mutationFn: login,
     onSuccess: (tokenData) => {
-      queryClient.setQueryData(["access_token"], tokenData.access_token);
+      queryClient.setQueryData(["token_data"], tokenData);
 
       if (tokenData.expires_in) {
         const refreshTime = (tokenData.expires_in - 300) * 1000;
         setTimeout(() => {
-          queryClient.invalidateQueries({ queryKey: ["access_token"] });
+          queryClient.invalidateQueries({ queryKey: ["token_data"] });
         }, refreshTime);
       }
     }
@@ -104,30 +101,16 @@ export function useLogout() {
     mutationFn: () => logout(),
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ["userInfo"] });
-      queryClient.removeQueries({ queryKey: ["access_token"] });
+      queryClient.removeQueries({ queryKey: ["token_data"] });
     }
   });
 }
 
 export function useAuthToken() {
   const queryClient = useQueryClient();
-  const tokenData = queryClient.getQueryData<string>(["access_token"]);
+  const tokenData = queryClient.getQueryData<TokenData>(["token_data"]);
 
-  return {
-    token: tokenData,
-    isValid: !!tokenData
-  };
-}
-
-export function useAuthStatus() {
-  const queryClient = useQueryClient();
-  const tokenData = queryClient.getQueryData<TokenData>(["access_token"]);
-  const user = queryClient.getQueryData<User>(["userInfo"]);
-
-  return {
-    isAuthenticated: !!tokenData,
-    user
-  };
+  return tokenData;
 }
 
 export const sessionService = {

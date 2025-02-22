@@ -30,11 +30,11 @@ async function fetchUserInfo(token?: string): Promise<UserInfo> {
 }
 
 export function useUserInfo() {
-  const { token } = useAuthToken();
+  const token = useAuthToken();
 
   return useQuery({
     queryKey: ["userInfo"],
-    queryFn: () => fetchUserInfo(token)
+    queryFn: () => fetchUserInfo(token?.access_token)
   });
 }
 
