@@ -1,18 +1,12 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useMemo } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  withRepeat,
-  withSequence,
-  withTiming,
-  useSharedValue,
-  withDelay
-} from "react-native-reanimated";
+import { withRepeat, withSequence, withTiming, useSharedValue, withDelay } from "react-native-reanimated";
 
 import data from "@/assets/dummyData/home.json";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
+import LoadingBar from "../LoadingBar";
 import DashboardItem from "../ui/DashboardItem";
 
 interface BatteryCardProps {
@@ -26,12 +20,12 @@ export default function BatteryCard({ onNavigate }: BatteryCardProps) {
 
   const batteryColor = useMemo(() => {
     if (battery.level > 30) {
-      return "green";
+      return "#33ab37";
     }
     if (battery.level > 10) {
-      return "yellow";
+      return "#FFC107";
     }
-    return "red";
+    return "#f52516";
   }, [battery.level]);
 
   useEffect(() => {
@@ -45,10 +39,6 @@ export default function BatteryCard({ onNavigate }: BatteryCardProps) {
       opacity.value = withTiming(1);
     }
   }, [battery.isCharging, opacity]);
-
-  const animatedProgressStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value
-  }));
 
   return (
     <DashboardItem
@@ -68,18 +58,7 @@ export default function BatteryCard({ onNavigate }: BatteryCardProps) {
           <Text style={[styles.range, { color: textColor }]}>{battery.range} km remaining</Text>
         </View>
 
-        <View style={[styles.progressBarContainer, { backgroundColor: `${batteryColor}30` }]}>
-          <Animated.View
-            style={[
-              styles.progressBarFill,
-              {
-                backgroundColor: batteryColor,
-                width: `${battery.level}%`
-              },
-              animatedProgressStyle
-            ]}
-          />
-        </View>
+        <LoadingBar animate={battery.isCharging} progress={battery.level} color={batteryColor} height={10} />
 
         {battery.isCharging && (
           <View style={styles.chargingInfo}>
@@ -107,16 +86,6 @@ const styles = StyleSheet.create({
   range: {
     fontSize: 16,
     opacity: 0.8
-  },
-  progressBarContainer: {
-    height: 8,
-    borderRadius: 4,
-    overflow: "hidden",
-    width: "100%"
-  },
-  progressBarFill: {
-    height: "100%",
-    borderRadius: 4
   },
   chargingInfo: {
     flexDirection: "row",

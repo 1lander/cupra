@@ -23,7 +23,7 @@
     }
   },
   "battery": {
-    "level": 34,
+    "level": 64,
     "range": 310,
     "isCharging": true,
     "charging": {

@@ -1,42 +1,27 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Slider from "@react-native-community/slider";
-import React, { useEffect, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  withRepeat,
-  withSequence,
-  withTiming,
-  useSharedValue,
-  withDelay
-} from "react-native-reanimated";
 
 import data from "@/assets/dummyData/home.json";
 import Button from "@/components/Button";
+import LoadingBar from "@/components/LoadingBar";
 import { useThemeColor } from "@/hooks/useThemeColor";
+
 export default function ChargingScreen() {
   const textColor = useThemeColor({}, "text");
-  const opacity = useSharedValue(1);
   const { battery } = data;
   const [chargingLimit, setChargingLimit] = useState(80);
 
-  const batteryColor = battery.level > 30 ? "green" : battery.level > 10 ? "yellow" : "red";
-
-  useEffect(() => {
-    if (battery.isCharging) {
-      opacity.value = withRepeat(
-        withSequence(withDelay(500, withTiming(0.6, { duration: 1000 })), withTiming(1, { duration: 1000 })),
-        -1,
-        true
-      );
-    } else {
-      opacity.value = withTiming(1);
+  const batteryColor = useMemo(() => {
+    if (battery.level > 30) {
+      return "#33ab37";
     }
-  }, [battery.isCharging, opacity]);
-
-  const animatedProgressStyle = useAnimatedStyle(() => ({
-    opacity: opacity.value
-  }));
+    if (battery.level > 10) {
+      return "#FFC107";
+    }
+    return "#f52516";
+  }, [battery.level]);
 
   const handleToggleCharging = () => {
     // TODO: Implement actual charging control
@@ -56,18 +41,7 @@ export default function ChargingScreen() {
           <Text style={[styles.range, { color: textColor }]}>{battery.range} km remaining</Text>
         </View>
 
-        <View style={[styles.progressBarContainer, { backgroundColor: `${batteryColor}30` }]}>
-          <Animated.View
-            style={[
-              styles.progressBarFill,
-              {
-                backgroundColor: batteryColor,
-                width: `${battery.level}%`
-              },
-              animatedProgressStyle
-            ]}
-          />
-        </View>
+        <LoadingBar animate={battery.isCharging} progress={battery.level} color={batteryColor} height={10} />
 
         <View style={styles.chargingControlContainer}>
           <Button
@@ -159,16 +133,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     opacity: 0.8,
     marginTop: 8
-  },
-  progressBarContainer: {
-    height: 12,
-    borderRadius: 6,
-    overflow: "hidden",
-    width: "100%"
-  },
-  progressBarFill: {
-    height: "100%",
-    borderRadius: 6
   },
   chargingContainer: {
     backgroundColor: "#2A312B",
