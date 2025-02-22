@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { useAuthToken } from "./session";
+
 interface UserInfo {
   sub: string;
   name: string;
@@ -13,12 +15,10 @@ interface UserInfo {
   picture: string;
 }
 
-const USERINFO_ENDPOINT = "https://identity-userinfo.vwgroup.io/oidc/userinfo";
-
-async function fetchUserInfo(): Promise<UserInfo> {
-  const response = await fetch(USERINFO_ENDPOINT, {
+async function fetchUserInfo(token?: string): Promise<UserInfo> {
+  const response = await fetch("https://identity-userinfo.vwgroup.io/oidc/userinfo", {
     headers: {
-      Authorization: `Bearer ${process.env.EXPO_PUBLIC_BEARER_TOKEN}`,
+      Authorization: `Bearer ${token}`,
       Accept: "application/json"
     }
   });
@@ -30,9 +30,11 @@ async function fetchUserInfo(): Promise<UserInfo> {
 }
 
 export function useUserInfo() {
+  const { token } = useAuthToken();
+
   return useQuery({
     queryKey: ["userInfo"],
-    queryFn: fetchUserInfo
+    queryFn: () => fetchUserInfo(token)
   });
 }
 

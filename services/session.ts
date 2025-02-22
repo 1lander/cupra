@@ -19,12 +19,17 @@ function getLoginUrl(): string {
   return `${AUTHORIZATION_URL}?${params.toString()}`;
 }
 
-async function login(): Promise<void> {
+interface TokenData {
+  access_token: string;
+  refresh_token?: string;
+  expires_in: number;
+  token_type: string;
+}
+
+async function login(): Promise<TokenData> {
   try {
-    const result = await WebBrowser.openAuthSessionAsync(
-      getLoginUrl(),
-      CALLBACK_URL // Use the same callback URL here
-    );
+    const loginUrl = getLoginUrl();
+    const result = await WebBrowser.openAuthSessionAsync(loginUrl, CALLBACK_URL);
 
     if (result.type === "success" && result.url) {
       // Parse the authorization code from the URL
@@ -54,9 +59,10 @@ async function login(): Promise<void> {
         throw new Error("Failed to get access token");
       }
 
-      const tokenData = await tokenResponse.json();
-      // Store the token data securely here
+      const tokenData: TokenData = await tokenResponse.json();
+      return tokenData;
     }
+    throw new Error("Login failed");
   } catch (error) {
     console.error("Login error:", error);
     throw new Error("Login failed");
@@ -73,10 +79,21 @@ async function logout(): Promise<void> {
   }
 }
 
-// React hooks for using the session service
 export function useLogin() {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: login
+    mutationFn: login,
+    onSuccess: (tokenData) => {
+      queryClient.setQueryData(["access_token"], tokenData.access_token);
+
+      if (tokenData.expires_in) {
+        const refreshTime = (tokenData.expires_in - 300) * 1000;
+        setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: ["access_token"] });
+        }, refreshTime);
+      }
+    }
   });
 }
 
@@ -86,19 +103,29 @@ export function useLogout() {
   return useMutation({
     mutationFn: () => logout(),
     onSuccess: () => {
-      // Clear the user info from the cache
       queryClient.removeQueries({ queryKey: ["userInfo"] });
-      // You might want to remove the token from secure storage here
+      queryClient.removeQueries({ queryKey: ["access_token"] });
     }
   });
 }
 
+export function useAuthToken() {
+  const queryClient = useQueryClient();
+  const tokenData = queryClient.getQueryData<string>(["access_token"]);
+
+  return {
+    token: tokenData,
+    isValid: !!tokenData
+  };
+}
+
 export function useAuthStatus() {
   const queryClient = useQueryClient();
-
+  const tokenData = queryClient.getQueryData<TokenData>(["access_token"]);
   const user = queryClient.getQueryData<User>(["userInfo"]);
+
   return {
-    isAuthenticated: !!user,
+    isAuthenticated: !!tokenData,
     user
   };
 }

@@ -9,14 +9,17 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "scheme": "cupra",
+      "bundleIdentifier": "com.lander.cupra"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#2A312B"
       },
-      "package": "com.lander.cupra"
+      "package": "com.lander.cupra",
+      "scheme": "cupra"
     },
     "web": {
       "bundler": "metro",
