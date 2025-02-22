@@ -1,7 +1,6 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React, { useEffect, useMemo } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useThemeColor } from "@/hooks/useThemeColor";
 import Animated, {
   useAnimatedStyle,
   withRepeat,
@@ -10,8 +9,11 @@ import Animated, {
   useSharedValue,
   withDelay
 } from "react-native-reanimated";
-import DashboardItem from "../ui/DashboardItem";
+
 import data from "@/assets/dummyData/home.json";
+import { useThemeColor } from "@/hooks/useThemeColor";
+
+import DashboardItem from "../ui/DashboardItem";
 
 interface BatteryCardProps {
   onNavigate?: () => void;
@@ -42,7 +44,7 @@ export default function BatteryCard({ onNavigate }: BatteryCardProps) {
     } else {
       opacity.value = withTiming(1);
     }
-  }, [battery.isCharging]);
+  }, [battery.isCharging, opacity]);
 
   const animatedProgressStyle = useAnimatedStyle(() => ({
     opacity: opacity.value
@@ -51,7 +53,13 @@ export default function BatteryCard({ onNavigate }: BatteryCardProps) {
   return (
     <DashboardItem
       title="Battery Status"
-      icon={<MaterialCommunityIcons name={battery.isCharging ? "battery-charging" : "battery"} size={24} color={textColor} />}
+      icon={
+        <MaterialCommunityIcons
+          name={battery.isCharging ? "battery-charging" : "battery"}
+          size={24}
+          color={textColor}
+        />
+      }
       onPress={onNavigate}
     >
       <>
@@ -76,7 +84,9 @@ export default function BatteryCard({ onNavigate }: BatteryCardProps) {
         {battery.isCharging && (
           <View style={styles.chargingInfo}>
             <MaterialCommunityIcons name="lightning-bolt" size={20} color={textColor} />
-            <Text style={[styles.chargingText, { color: textColor }]}>Charging - {battery.charging.timeRemaining} remaining</Text>
+            <Text style={[styles.chargingText, { color: textColor }]}>
+              Charging - {battery.charging.timeRemaining} remaining
+            </Text>
           </View>
         )}
       </>

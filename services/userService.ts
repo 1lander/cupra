@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery } from "@tanstack/react-query";
 
 interface UserInfo {
   sub: string;
@@ -13,17 +13,17 @@ interface UserInfo {
   picture: string;
 }
 
-const USERINFO_ENDPOINT = 'https://identity-userinfo.vwgroup.io/oidc/userinfo';
+const USERINFO_ENDPOINT = "https://identity-userinfo.vwgroup.io/oidc/userinfo";
 
 async function fetchUserInfo(): Promise<UserInfo> {
   const response = await fetch(USERINFO_ENDPOINT, {
     headers: {
-      'Authorization': `Bearer ${process.env.EXPO_PUBLIC_BEARER_TOKEN}`,
-      'Accept': 'application/json',
-    },
+      Authorization: `Bearer ${process.env.EXPO_PUBLIC_BEARER_TOKEN}`,
+      Accept: "application/json"
+    }
   });
   if (!response.ok) {
-    throw new Error('Failed to fetch user info');
+    throw new Error("Failed to fetch user info");
   }
 
   return response.json();
@@ -31,13 +31,13 @@ async function fetchUserInfo(): Promise<UserInfo> {
 
 export function useUserInfo() {
   return useQuery({
-    queryKey: ['userInfo'],
-    queryFn: fetchUserInfo,
+    queryKey: ["userInfo"],
+    queryFn: fetchUserInfo
   });
 }
 
 // Helper function to get the access token
 // TODO: Implement this based on your authentication setup
 export async function getAccessToken(): Promise<string> {
-  throw new Error('Not implemented');
+  throw new Error("Not implemented");
 }

@@ -1,14 +1,15 @@
+import { useRouter } from "expo-router";
 import { Image, StyleSheet, View } from "react-native";
+
+import data from "@/assets/dummyData/home.json";
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import BatteryCard from "@/components/cards/BatteryCard";
 import DoorsCard from "@/components/cards/DoorsCard";
-import WindowsCard from "@/components/cards/WindowsCard";
-import VehicleCard from "@/components/cards/VehicleCard";
-import { useRouter } from "expo-router";
 import UserCard from "@/components/cards/UserCard";
-import data from "@/assets/dummyData/home.json";
+import VehicleCard from "@/components/cards/VehicleCard";
+import WindowsCard from "@/components/cards/WindowsCard";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function HomeScreen() {
       headerImage={<Image source={require("@/assets/images/cupra_born.png")} style={styles.headerImage} />}
     >
       <View style={styles.titleContainer}>
-        <ThemedText type="title">Welcome {data.vehicle.nickname}!</ThemedText>
+        <ThemedText type="title">Welcome!</ThemedText>
         <HelloWave />
       </View>
       <View style={styles.stepContainer}>
@@ -41,22 +42,14 @@ export default function HomeScreen() {
           }}
         />
 
-        {/* <DoorsCard doorStatus={data.vehicle.doorStatus} />
-        <WindowsCard windowStatus={data.vehicle.windowStatus} /> */}
+        <DoorsCard doorStatus={data.vehicle.doorStatus} />
+        <WindowsCard windowStatus={data.vehicle.windowStatus} />
       </View>
     </ParallaxScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  step: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    backgroundColor: "red",
-    padding: 16,
-    borderRadius: 16
-  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",

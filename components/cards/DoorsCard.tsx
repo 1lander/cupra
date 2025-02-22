@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import DashboardItem from '../ui/DashboardItem';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+import { useThemeColor } from "@/hooks/useThemeColor";
+
+import DashboardItem from "../ui/DashboardItem";
 
 interface DoorStatus {
   frontLeft: boolean;
@@ -18,8 +20,8 @@ interface DoorsCardProps {
 }
 
 export default function DoorsCard({ doorStatus }: DoorsCardProps) {
-  const textColor = useThemeColor({}, 'text');
-  
+  const textColor = useThemeColor({}, "text");
+
   const DoorIndicator = ({ isOpen, label }: { isOpen: boolean; label: string }) => (
     <View style={styles.doorIndicator}>
       <MaterialCommunityIcons
@@ -34,10 +36,7 @@ export default function DoorsCard({ doorStatus }: DoorsCardProps) {
   );
 
   return (
-    <DashboardItem
-      title="Doors"
-      icon={<MaterialCommunityIcons name="car-door" size={24} color={textColor} />}
-    >
+    <DashboardItem title="Doors" icon={<MaterialCommunityIcons name="car-door" size={24} color={textColor} />}>
       <View style={styles.doorsGrid}>
         <DoorIndicator isOpen={doorStatus.frontLeft} label="Front Left" />
         <DoorIndicator isOpen={doorStatus.frontRight} label="Front Right" />
@@ -52,18 +51,18 @@ export default function DoorsCard({ doorStatus }: DoorsCardProps) {
 
 const styles = StyleSheet.create({
   doorsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 16,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 16
   },
   doorIndicator: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
-    minWidth: '45%',
+    minWidth: "45%"
   },
   doorLabel: {
     fontSize: 14,
-    fontWeight: '500',
-  },
+    fontWeight: "500"
+  }
 });

@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, ActivityIndicator } from "react-native";
+
 import { useThemeColor } from "@/hooks/useThemeColor";
+
 import Error from "./Error";
 
 interface DashboardItemProps {

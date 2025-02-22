@@ -1,22 +1,24 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import DashboardItem from '../ui/DashboardItem';
-import { useThemeColor } from '@/hooks/useThemeColor';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
+
+import { useThemeColor } from "@/hooks/useThemeColor";
+
+import DashboardItem from "../ui/DashboardItem";
 
 interface WindowStatus {
-    frontLeft: boolean;
-    frontRight: boolean;
-    rearLeft: boolean;
-    rearRight: boolean;
-  }
-  
-  interface WindowsCardProps {
-    windowStatus: WindowStatus;
-  }
+  frontLeft: boolean;
+  frontRight: boolean;
+  rearLeft: boolean;
+  rearRight: boolean;
+}
+
+interface WindowsCardProps {
+  windowStatus: WindowStatus;
+}
 
 export default function WindowsCard({ windowStatus }: WindowsCardProps) {
-  const textColor = useThemeColor({}, 'text');
+  const textColor = useThemeColor({}, "text");
 
   const WindowIndicator = ({ isOpen, label }: { isOpen: boolean; label: string }) => (
     <View style={styles.windowIndicator}>
@@ -32,16 +34,7 @@ export default function WindowsCard({ windowStatus }: WindowsCardProps) {
   );
 
   return (
-    <DashboardItem
-      title="Windows"
-      icon={
-        <MaterialCommunityIcons 
-          name="car-door" 
-          size={24} 
-          color={textColor} 
-        />
-      }
-    >
+    <DashboardItem title="Windows" icon={<MaterialCommunityIcons name="car-door" size={24} color={textColor} />}>
       <View style={styles.windowGrid}>
         <WindowIndicator isOpen={windowStatus.frontLeft} label="Front Left" />
         <WindowIndicator isOpen={windowStatus.frontRight} label="Front Right" />
@@ -54,32 +47,15 @@ export default function WindowsCard({ windowStatus }: WindowsCardProps) {
 
 const styles = StyleSheet.create({
   windowGrid: {
-    gap: 8,
-  },
-  windowItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: 'rgba(0,0,0,0.2)',
-    borderRadius: 8,
-  },
-  windowText: {
-    flex: 1,
-    marginLeft: 12,
-    fontSize: 16,
-  },
-  statusText: {
-    fontSize: 14,
-    fontWeight: '500',
+    gap: 8
   },
   windowIndicator: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8
   },
   windowLabel: {
     fontSize: 14,
-    fontWeight: '500',
-  },
+    fontWeight: "500"
+  }
 });

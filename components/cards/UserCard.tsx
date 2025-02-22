@@ -1,10 +1,12 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { format } from "date-fns";
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import DashboardItem from "../ui/DashboardItem";
+
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { format } from "date-fns";
 import { useUserInfo } from "@/services/userService";
+
+import DashboardItem from "../ui/DashboardItem";
 interface UserCardProps {
   onNavigate?: () => void;
 }
@@ -56,8 +58,5 @@ const styles = StyleSheet.create({
   },
   value: {
     fontSize: 16
-  },
-  link: {
-    textDecorationLine: "underline"
   }
 });
