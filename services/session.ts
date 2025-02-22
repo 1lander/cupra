@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 
 import { User } from "../types/user";
@@ -11,26 +10,55 @@ const CLIENT_ID = "3c756d46-f1ba-4d78-9f9a-cff0d5292d51@apps_vw-dilab_com";
 const CLIENT_SECRET = "eb8814e641c81a2640ad62eeccec11c98effc9bccd4269ab7af338b50a94b3a2";
 
 function getLoginUrl(): string {
-  const redirectUri = Linking.createURL("login");
   const params = new URLSearchParams({
-    callback_url: CALLBACK_URL,
+    response_type: "code",
     client_id: CLIENT_ID,
-    access_token_url: ACCESS_TOKEN_URL,
-    client_secret: CLIENT_SECRET,
-    redirect_uri: redirectUri
+    redirect_uri: CALLBACK_URL,
+    scope: "openid profile nickname birthdate phone cars badge dealers"
   });
   return `${AUTHORIZATION_URL}?${params.toString()}`;
 }
 
 async function login(): Promise<void> {
   try {
-    const result = await WebBrowser.openAuthSessionAsync(getLoginUrl(), Linking.createURL("login"));
+    const result = await WebBrowser.openAuthSessionAsync(
+      getLoginUrl(),
+      CALLBACK_URL // Use the same callback URL here
+    );
 
-    if (result.type === "success") {
-      // Handle successful login
-      // You might want to parse the URL for auth tokens here
+    if (result.type === "success" && result.url) {
+      // Parse the authorization code from the URL
+      const url = new URL(result.url);
+      const code = url.searchParams.get("code");
+
+      if (!code) {
+        throw new Error("No authorization code received");
+      }
+
+      // Exchange the code for an access token
+      const tokenResponse = await fetch(ACCESS_TOKEN_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+          grant_type: "authorization_code",
+          code,
+          redirect_uri: CALLBACK_URL,
+          client_id: CLIENT_ID,
+          client_secret: CLIENT_SECRET
+        }).toString()
+      });
+
+      if (!tokenResponse.ok) {
+        throw new Error("Failed to get access token");
+      }
+
+      const tokenData = await tokenResponse.json();
+      // Store the token data securely here
     }
   } catch (error) {
+    console.error("Login error:", error);
     throw new Error("Login failed");
   }
 }
@@ -47,8 +75,6 @@ async function logout(): Promise<void> {
 
 // React hooks for using the session service
 export function useLogin() {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: login
   });

@@ -28,7 +28,7 @@ export default function AppLayout() {
   }
 
   //TODO: Remove this once we have a proper auth flow
-  if (isAuthenticated) {
+  if (!isAuthenticated) {
     return <Redirect href="/login" />;
   }
 
