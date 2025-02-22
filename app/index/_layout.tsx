@@ -2,6 +2,14 @@ import { Stack } from 'expo-router';
 import React from 'react';
 
 export default function IndexLayout() {
+  const headerOptions = {
+    headerShown: true,
+    headerStyle: {
+      backgroundColor: '#2A312B',
+    },
+    headerTintColor: '#fff',
+  }
+
   return (
     <Stack>
       <Stack.Screen
@@ -11,16 +19,17 @@ export default function IndexLayout() {
         }}
       />
       <Stack.Screen
-        name="charging"
+        name="battery"
         options={{
-          title: "Charging Status",
-          headerShown: true,
+          title: "Battery Status",
+          ...headerOptions
         }}
       />
       <Stack.Screen
         name="user"
         options={{
-          headerShown: false,
+          title: "User",
+          ...headerOptions
         }}
       />
     </Stack>

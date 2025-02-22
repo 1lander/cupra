@@ -1,19 +1,14 @@
 import { Image, StyleSheet, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
-import data from "@/assets/dummyData/home.json";
 import BatteryCard from "@/components/cards/BatteryCard";
 import DoorsCard from "@/components/cards/DoorsCard";
 import WindowsCard from "@/components/cards/WindowsCard";
 import VehicleCard from "@/components/cards/VehicleCard";
-import Error from "@/components/ui/Error";
 import { useRouter } from "expo-router";
 import UserCard from "@/components/cards/UserCard";
-import { useUserInfo } from "@/services/userService";
+import data from "@/assets/dummyData/home.json";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -36,20 +31,16 @@ export default function HomeScreen() {
           location={data.location}
         />
         <BatteryCard
-          batteryLevel={data.battery.level}
-          range={data.battery.range}
-          isCharging={data.battery.isCharging}
-          timeRemaining={data.battery.charging.timeRemaining}
           onNavigate={() => {
-            router.push("/charging");
+            router.push("/battery");
           }}
         />
-          <UserCard
-            onNavigate={() => {
-              router.push("/user");
-            }}
-          />
-        
+        <UserCard
+          onNavigate={() => {
+            router.push("/user");
+          }}
+        />
+
         {/* <DoorsCard doorStatus={data.vehicle.doorStatus} />
         <WindowsCard windowStatus={data.vehicle.windowStatus} /> */}
       </View>

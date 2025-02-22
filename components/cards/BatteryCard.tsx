@@ -11,33 +11,29 @@ import Animated, {
   withDelay
 } from "react-native-reanimated";
 import DashboardItem from "../ui/DashboardItem";
-import { useRouter } from "expo-router";
+import data from "@/assets/dummyData/home.json";
 
 interface BatteryCardProps {
-  batteryLevel: number; // percentage (0-100)
-  range: number; // miles/kilometers
-  isCharging: boolean;
-  timeRemaining?: string; // only present if charging
   onNavigate?: () => void;
 }
 
-export default function BatteryCard({ batteryLevel, range, isCharging, timeRemaining, onNavigate }: BatteryCardProps) {
+export default function BatteryCard({ onNavigate }: BatteryCardProps) {
   const textColor = useThemeColor({}, "text");
   const opacity = useSharedValue(1);
-  const router = useRouter();
+  const { battery } = data;
 
   const batteryColor = useMemo(() => {
-    if (batteryLevel > 30) {
+    if (battery.level > 30) {
       return "green";
     }
-    if (batteryLevel > 10) {
+    if (battery.level > 10) {
       return "yellow";
     }
     return "red";
-  }, [batteryLevel]);
+  }, [battery.level]);
 
   useEffect(() => {
-    if (isCharging) {
+    if (battery.isCharging) {
       opacity.value = withRepeat(
         withSequence(withDelay(500, withTiming(0.6, { duration: 1000 })), withTiming(1, { duration: 1000 })),
         -1,
@@ -46,7 +42,7 @@ export default function BatteryCard({ batteryLevel, range, isCharging, timeRemai
     } else {
       opacity.value = withTiming(1);
     }
-  }, [isCharging]);
+  }, [battery.isCharging]);
 
   const animatedProgressStyle = useAnimatedStyle(() => ({
     opacity: opacity.value
@@ -55,13 +51,13 @@ export default function BatteryCard({ batteryLevel, range, isCharging, timeRemai
   return (
     <DashboardItem
       title="Battery Status"
-      icon={<MaterialCommunityIcons name={isCharging ? "battery-charging" : "battery"} size={24} color={textColor} />}
+      icon={<MaterialCommunityIcons name={battery.isCharging ? "battery-charging" : "battery"} size={24} color={textColor} />}
       onPress={onNavigate}
     >
       <>
         <View style={styles.percentageContainer}>
-          <Text style={[styles.percentage, { color: textColor }]}>{batteryLevel}%</Text>
-          <Text style={[styles.range, { color: textColor }]}>{range} km remaining</Text>
+          <Text style={[styles.percentage, { color: textColor }]}>{battery.level}%</Text>
+          <Text style={[styles.range, { color: textColor }]}>{battery.range} km remaining</Text>
         </View>
 
         <View style={[styles.progressBarContainer, { backgroundColor: `${batteryColor}30` }]}>
@@ -70,17 +66,17 @@ export default function BatteryCard({ batteryLevel, range, isCharging, timeRemai
               styles.progressBarFill,
               {
                 backgroundColor: batteryColor,
-                width: `${batteryLevel}%`
+                width: `${battery.level}%`
               },
               animatedProgressStyle
             ]}
           />
         </View>
 
-        {isCharging && (
+        {battery.isCharging && (
           <View style={styles.chargingInfo}>
             <MaterialCommunityIcons name="lightning-bolt" size={20} color={textColor} />
-            <Text style={[styles.chargingText, { color: textColor }]}>Charging - {timeRemaining} remaining</Text>
+            <Text style={[styles.chargingText, { color: textColor }]}>Charging - {battery.charging.timeRemaining} remaining</Text>
           </View>
         )}
       </>
