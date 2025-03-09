@@ -18,7 +18,7 @@ export default function Login() {
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.content}>
-        <Button title="Login" onPress={() => login()} />
+        <Button title="Login" onPress={login} />
       </View>
       <ThemedText style={styles.text}>This will redirect you to the cupra login page.</ThemedText>
     </View>

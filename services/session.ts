@@ -24,7 +24,7 @@ export interface TokenData {
   token_type: string;
 }
 
-async function login(): Promise<TokenData> {
+async function login(): Promise<TokenData | undefined> {
   try {
     const loginUrl = getLoginUrl();
     const result = await WebBrowser.openAuthSessionAsync(loginUrl, CALLBACK_URL);
@@ -59,10 +59,8 @@ async function login(): Promise<TokenData> {
 
       return await tokenResponse.json();
     }
-    throw new Error("Login failed");
   } catch (error) {
     console.error("Login error:", error);
-    throw new Error("Login failed");
   }
 }
 
@@ -84,7 +82,7 @@ export function useLogin() {
     onSuccess: (tokenData) => {
       queryClient.setQueryData(["token_data"], tokenData);
 
-      if (tokenData.expires_in) {
+      if (tokenData?.expires_in) {
         const refreshTime = (tokenData.expires_in - 300) * 1000;
         setTimeout(() => {
           queryClient.invalidateQueries({ queryKey: ["token_data"] });
