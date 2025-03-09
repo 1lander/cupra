@@ -2,7 +2,6 @@ import { useRouter } from "expo-router";
 import { Image, StyleSheet, View } from "react-native";
 
 import data from "@/assets/dummyData/home.json";
-import Button from "@/components/Button";
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -11,7 +10,6 @@ import DoorsCard from "@/components/cards/DoorsCard";
 import UserCard from "@/components/cards/UserCard";
 import VehicleCard from "@/components/cards/VehicleCard";
 import WindowsCard from "@/components/cards/WindowsCard";
-import { logout } from "@/services/session";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -48,7 +46,6 @@ export default function HomeScreen() {
         <DoorsCard doorStatus={data.vehicle.doorStatus} />
         <WindowsCard windowStatus={data.vehicle.windowStatus} />
       </View>
-      <Button title="Logout" onPress={logout} />
     </ParallaxScrollView>
   );
 }

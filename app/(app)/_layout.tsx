@@ -11,7 +11,7 @@ import { getStoredTokenData } from "@/services/session";
 SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -31,7 +31,7 @@ export default function AppLayout() {
     }
   }, [loaded]);
 
-  if (!loaded) {
+  if (!loaded || isLoggedIn === null) {
     return null;
   }
 
