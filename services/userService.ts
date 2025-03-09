@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { useAuthToken } from "./session";
+import { getStoredTokenData } from "./session";
 
 interface UserInfo {
   sub: string;
@@ -30,16 +30,11 @@ async function fetchUserInfo(token?: string): Promise<UserInfo> {
 }
 
 export function useUserInfo() {
-  const token = useAuthToken();
-
   return useQuery({
     queryKey: ["userInfo"],
-    queryFn: () => fetchUserInfo(token?.access_token)
+    queryFn: async () => {
+      const token = await getStoredTokenData();
+      return fetchUserInfo(token?.access_token);
+    }
   });
-}
-
-// Helper function to get the access token
-// TODO: Implement this based on your authentication setup
-export async function getAccessToken(): Promise<string> {
-  throw new Error("Not implemented");
 }

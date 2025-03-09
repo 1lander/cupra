@@ -1,17 +1,25 @@
 import { Redirect } from "expo-router";
+import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 
 import Button from "@/components/Button";
 import { ThemedText } from "@/components/ThemedText";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { useLogin, useAuthToken } from "@/services/session";
+import { login, getStoredTokenData } from "@/services/session";
 
 export default function Login() {
-  const { mutate: login } = useLogin();
-  const token = useAuthToken();
   const background = useThemeColor({}, "background");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  if (token) {
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await getStoredTokenData();
+      setIsLoggedIn(!!token);
+    };
+    checkToken();
+  }, []);
+
+  if (isLoggedIn) {
     return <Redirect href="/(app)/(index)" />;
   }
 

@@ -15,6 +15,11 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    ```bash
     npx expo start
    ```
+## Create a development build
+
+```bash
+eas build --profile development --platform android
+```
 
 ## Notes
 

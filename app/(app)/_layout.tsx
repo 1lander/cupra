@@ -2,17 +2,24 @@ import { useFonts } from "expo-font";
 import { Redirect, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
 import { useEffect } from "react";
 
 import "react-native-reanimated";
-import { useAuthToken } from "@/services/session";
+import { getStoredTokenData } from "@/services/session";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
-  const token = useAuthToken();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const checkToken = async () => {
+      const token = await getStoredTokenData();
+      setIsLoggedIn(!!token);
+    };
+    checkToken();
+  }, []);
   const [loaded] = useFonts({
     SpaceMono: require("./../../assets/fonts/SpaceMono-Regular.ttf")
   });
@@ -27,7 +34,7 @@ export default function AppLayout() {
     return null;
   }
 
-  if (!token) {
+  if (!isLoggedIn) {
     return <Redirect href="/login" />;
   }
 
