@@ -9,16 +9,6 @@ const CLIENT_SECRET = "eb8814e641c81a2640ad62eeccec11c98effc9bccd4269ab7af338b50
 
 const TOKEN_STORAGE_KEY = "auth_token_data";
 
-// function getLoginUrl(): string {
-//   const params = new URLSearchParams({
-//     response_type: "code",
-//     client_id: CLIENT_ID,
-//     redirect_uri: CALLBACK_URL,
-//     scope: "openid profile nickname birthdate phone cars badge dealers"
-//   });
-//   return `${AUTHORIZATION_URL}?${params.toString()}`;
-// }
-
 export interface TokenData {
   access_token: string;
   refresh_token?: string;
@@ -79,17 +69,8 @@ export async function login(): Promise<void> {
 
 export async function logout(): Promise<void> {
   try {
-    const response = await fetch(`${AUTHORIZATION_URL}/auth/logout`, {
-      method: "POST"
-    });
-
-    if (!response.ok) {
-      throw new Error("Logout failed");
-    }
-
     await SecureStore.deleteItemAsync(TOKEN_STORAGE_KEY);
   } catch (error) {
     console.error("Logout error:", error);
-    throw error;
   }
 }

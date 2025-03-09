@@ -13,7 +13,7 @@ export default function OAuthCallback() {
   useEffect(() => {
     const interval = setInterval(async () => {
       const tokenData = await getStoredTokenData();
-      if (tokenData?.access_token) {
+      if (tokenData) {
         router.replace("/(app)/(index)");
         clearInterval(interval);
       }
