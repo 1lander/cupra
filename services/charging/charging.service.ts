@@ -3,10 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { baseUrl } from "@/constants/Services";
 import { useSession } from "@/context/session";
 
-import { Vehicle } from "./vehicle.types";
+import { ChargingSettings } from "./charging.types";
 
-async function fetchVehicle(token?: string, vin?: string): Promise<Vehicle> {
-  const response = await fetch(`${baseUrl}/vehicles/${vin}/connection`, {
+async function fetchChargingSettings(token?: string, vin?: string): Promise<ChargingSettings> {
+  const response = await fetch(`${baseUrl}/vehicles/${vin}/charging/settings`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json"
@@ -19,16 +19,16 @@ async function fetchVehicle(token?: string, vin?: string): Promise<Vehicle> {
   return response.json();
 }
 
-export function useVehicle(vin: string) {
+export function useCharging(vin: string) {
   const { session } = useSession();
 
   return useQuery({
-    queryKey: ["vehicle"],
+    queryKey: ["charging-settings"],
     queryFn: async () => {
       if (!session) {
         throw new Error("No session found");
       }
-      return fetchVehicle(session, vin);
+      return fetchChargingSettings(session, vin);
     }
   });
 }
