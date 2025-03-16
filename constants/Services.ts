@@ -1,0 +1,1 @@
+export const baseUrl = "https://ola.prod.code.seat.cloud.vwgroup.com";

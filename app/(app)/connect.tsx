@@ -4,16 +4,19 @@ import { View, StyleSheet } from "react-native";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import { useSession } from "@/context/session";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Connect() {
   const background = useThemeColor({}, "background");
   const router = useRouter();
   const [vin, setVin] = useState<string | undefined>();
+  const { connectVehicle } = useSession();
 
-  const connectVehicle = () => {
+  const onSubmit = () => {
     console.log("Connecting vehicle...");
     if (vin) {
+      connectVehicle(vin);
       router.replace("/(app)/(index)");
     }
   };
@@ -22,7 +25,7 @@ export default function Connect() {
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.content}>
         <Input label="Enter your car's VIN" value={vin} onChangeText={setVin} />
-        <Button title="Connect Vehicle" onPress={() => connectVehicle()} />
+        <Button title="Connect Vehicle" onPress={onSubmit} />
       </View>
     </View>
   );

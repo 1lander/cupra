@@ -12,16 +12,19 @@ const CLIENT_SECRET = "eb8814e641c81a2640ad62eeccec11c98effc9bccd4269ab7af338b50
 const AuthContext = createContext<{
   signIn: () => void;
   signOut: () => void;
+  connectVehicle: (vin: string) => void;
+  vin: string | null;
   session?: string | null;
   isLoading: boolean;
 }>({
   signIn: () => null,
   signOut: () => null,
+  connectVehicle: () => null,
+  vin: null,
   session: null,
   isLoading: false
 });
 
-// This hook can be used to access the user info.
 export function useSession() {
   const value = useContext(AuthContext);
   if (process.env.NODE_ENV !== "production") {
@@ -35,6 +38,7 @@ export function useSession() {
 
 export function SessionProvider({ children }: PropsWithChildren) {
   const [[isLoading, session], setSession] = useStorageState("session");
+  const [[isLoadingVin, vin], setVin] = useStorageState("vin");
 
   return (
     <AuthContext.Provider
@@ -89,8 +93,22 @@ export function SessionProvider({ children }: PropsWithChildren) {
           console.log("coolDownAsync", result);
           setSession(null);
         },
+        connectVehicle: async (vin: string) => {
+          setVin(vin);
+          // TODO: Implement this when we have a car to connect with
+          // const response = await fetch(`${baseUrl}/vehicles/${vin}/connection`, {
+          //   headers: {
+          //     Authorization: `Bearer ${session}`,
+          //     Accept: "application/json"
+          //   }
+          // });
+          // if (!response.ok) {
+          //   throw new Error("Failed to connect vehicle");
+          // }
+        },
+        vin,
         session,
-        isLoading
+        isLoading: isLoading || isLoadingVin
       }}
     >
       {children}

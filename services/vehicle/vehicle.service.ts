@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
+import { baseUrl } from "@/constants/Services";
 import { useSession } from "@/context/session";
 
 import { Vehicle } from "./vehicle.types";
 
 async function fetchVehicle(token?: string, vin?: string): Promise<Vehicle> {
-  const response = await fetch(`https://ola.prod.code.seat.cloud.vwgroup.com/vehicles/${vin}/connection`, {
+  const response = await fetch(`${baseUrl}/vehicles/${vin}/connection`, {
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: "application/json"
