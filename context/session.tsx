@@ -1,4 +1,4 @@
-import { openAuthSessionAsync, coolDownAsync } from "expo-web-browser";
+import { openAuthSessionAsync } from "expo-web-browser";
 import { useContext, createContext, type PropsWithChildren } from "react";
 
 import { useStorageState } from "@/hooks/useStorageState";
@@ -89,9 +89,8 @@ export function SessionProvider({ children }: PropsWithChildren) {
           }
         },
         signOut: async () => {
-          const result = await coolDownAsync();
-          console.log("coolDownAsync", result);
           setSession(null);
+          setVin(null);
         },
         connectVehicle: async (vin: string) => {
           setVin(vin);
