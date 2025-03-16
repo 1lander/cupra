@@ -1,21 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getStoredTokenData } from "./session";
+import { getStoredTokenData } from "../session";
 
-interface UserInfo {
-  sub: string;
-  name: string;
-  given_name: string;
-  family_name: string;
-  nickname: string;
-  email: string;
-  email_verified: boolean;
-  birthdate: string;
-  updated_at: number;
-  picture: string;
-}
+import { User } from "./user.types";
 
-async function fetchUserInfo(token?: string): Promise<UserInfo> {
+async function fetchUser(token?: string): Promise<User> {
   const response = await fetch("https://identity-userinfo.vwgroup.io/oidc/userinfo", {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -29,12 +18,12 @@ async function fetchUserInfo(token?: string): Promise<UserInfo> {
   return response.json();
 }
 
-export function useUserInfo() {
+export function useUser() {
   return useQuery({
-    queryKey: ["userInfo"],
+    queryKey: ["user"],
     queryFn: async () => {
       const token = await getStoredTokenData();
-      return fetchUserInfo(token?.access_token);
+      return fetchUser(token?.access_token);
     }
   });
 }

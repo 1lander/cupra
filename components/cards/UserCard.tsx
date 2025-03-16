@@ -4,7 +4,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { useUserInfo } from "@/services/userService";
+import { useUser } from "@/services/user";
 
 import DashboardItem from "../ui/DashboardItem";
 interface UserCardProps {
@@ -12,7 +12,7 @@ interface UserCardProps {
 }
 
 export default function UserCard({ onNavigate }: UserCardProps) {
-  const { data: userInfo, isLoading, isError } = useUserInfo();
+  const { data: user, isLoading, isError } = useUser();
   const textColor = useThemeColor({}, "text");
 
   return (
@@ -23,21 +23,21 @@ export default function UserCard({ onNavigate }: UserCardProps) {
       icon={<MaterialCommunityIcons name="account" size={24} color={textColor} />}
       onPress={onNavigate}
     >
-      {userInfo && (
+      {user && (
         <>
           <View style={styles.infoRow}>
             <Text style={[styles.label, { color: textColor }]}>Name:</Text>
-            <Text style={[styles.value, { color: textColor }]}>{userInfo.name}</Text>
+            <Text style={[styles.value, { color: textColor }]}>{user.name}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <Text style={[styles.label, { color: textColor }]}>Email:</Text>
-            <Text style={[styles.value, { color: textColor }]}>{userInfo.email}</Text>
+            <Text style={[styles.value, { color: textColor }]}>{user.email}</Text>
           </View>
 
           <View style={styles.infoRow}>
             <Text style={[styles.label, { color: textColor }]}>Birthdate:</Text>
-            <Text style={[styles.value, { color: textColor }]}>{format(userInfo.birthdate, "dd/MM/yyyy")}</Text>
+            <Text style={[styles.value, { color: textColor }]}>{format(user.birthdate, "dd/MM/yyyy")}</Text>
           </View>
         </>
       )}

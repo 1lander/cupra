@@ -14,7 +14,7 @@ export default function OAuthCallback() {
     const interval = setInterval(async () => {
       const tokenData = await getStoredTokenData();
       if (tokenData) {
-        router.replace("/(app)/(index)");
+        router.replace("/(app)/connect");
         clearInterval(interval);
       }
     }, 1000);
