@@ -1,8 +1,9 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import Button from "@/components/Button";
+import Input from "@/components/Input";
 import { useThemeColor } from "@/hooks/useThemeColor";
 
 export default function Connect() {
@@ -20,7 +21,7 @@ export default function Connect() {
   return (
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.content}>
-        <TextInput placeholder="Enter VIN" value={vin} onChangeText={setVin} style={styles.input} />
+        <Input label="Enter your car's VIN" value={vin} onChangeText={setVin} />
         <Button title="Connect Vehicle" onPress={() => connectVehicle()} />
       </View>
     </View>
@@ -37,12 +38,5 @@ const styles = StyleSheet.create({
     width: "80%",
     maxWidth: 400,
     gap: 16
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
-    paddingHorizontal: 10
   }
 });
