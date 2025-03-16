@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getStoredTokenData } from "../session";
+import { useSession } from "@/context/session";
 
 import { Vehicle } from "./vehicle.types";
 
@@ -19,11 +19,15 @@ async function fetchVehicle(token?: string, vin?: string): Promise<Vehicle> {
 }
 
 export function useVehicle(vin: string) {
+  const { session } = useSession();
+
   return useQuery({
     queryKey: ["vehicle"],
     queryFn: async () => {
-      const token = await getStoredTokenData();
-      return fetchVehicle(token?.access_token, vin);
+      if (!session) {
+        throw new Error("No session found");
+      }
+      return fetchVehicle(session, vin);
     }
   });
 }

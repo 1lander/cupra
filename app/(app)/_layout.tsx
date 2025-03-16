@@ -2,24 +2,16 @@ import { useFonts } from "expo-font";
 import { Redirect, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 
 import "react-native-reanimated";
-import { getStoredTokenData } from "@/services/session";
 
+import { useSession } from "@/context/session";
 SplashScreen.preventAutoHideAsync();
 
 export default function AppLayout() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = await getStoredTokenData();
-      setIsLoggedIn(!!token);
-    };
-    checkToken();
-  }, []);
+  const { session } = useSession();
 
   const [loaded] = useFonts({
     SpaceMono: require("./../../assets/fonts/SpaceMono-Regular.ttf")
@@ -31,11 +23,11 @@ export default function AppLayout() {
     }
   }, [loaded]);
 
-  if (!loaded || isLoggedIn === null) {
+  if (!loaded) {
     return null;
   }
 
-  if (!isLoggedIn) {
+  if (!session) {
     return <Redirect href="/login" />;
   }
 
@@ -43,6 +35,7 @@ export default function AppLayout() {
     <>
       <Stack>
         <Stack.Screen name="(index)" options={{ headerShown: false }} />
+        <Stack.Screen name="connect" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

@@ -21,7 +21,7 @@ export default function Connect() {
     <View style={[styles.container, { backgroundColor: background }]}>
       <View style={styles.content}>
         <TextInput placeholder="Enter VIN" value={vin} onChangeText={setVin} style={styles.input} />
-        <Button title="Connect" onPress={() => connectVehicle()} />
+        <Button title="Connect Vehicle" onPress={() => connectVehicle()} />
       </View>
     </View>
   );
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
   },
   content: {
     width: "80%",
-    maxWidth: 400
+    maxWidth: 400,
+    gap: 16
   },
   input: {
     height: 40,

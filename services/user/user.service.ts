@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getStoredTokenData } from "../session";
+import { useSession } from "@/context/session";
 
 import { User } from "./user.types";
 
@@ -19,11 +19,15 @@ async function fetchUser(token?: string): Promise<User> {
 }
 
 export function useUser() {
+  const { session } = useSession();
+
   return useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const token = await getStoredTokenData();
-      return fetchUser(token?.access_token);
+      if (!session) {
+        throw new Error("No session found");
+      }
+      return fetchUser(session);
     }
   });
 }

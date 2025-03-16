@@ -1,3 +1,4 @@
+// Deprecated replaced with context/session.ts
 import * as SecureStore from "expo-secure-store";
 import * as WebBrowser from "expo-web-browser";
 

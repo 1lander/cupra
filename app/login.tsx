@@ -2,14 +2,16 @@ import { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
+import { useSession } from "@/context/session";
 import { useThemeColor } from "@/hooks/useThemeColor";
-import { login } from "@/services/session";
 
 export default function Login() {
+  const { signIn } = useSession();
+
   const background = useThemeColor({}, "background");
 
   useEffect(() => {
-    login();
+    signIn();
   }, []);
 
   return (
